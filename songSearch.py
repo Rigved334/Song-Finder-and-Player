@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 
+# importing the data
 df = pd.read_csv("song_data.csv")
 df.index += 1
 
@@ -11,6 +12,7 @@ menu = st.sidebar.selectbox("Select Action",
                             "Search by Artist Name", 
                             "Display All Songs"])
 
+# setting up session state
 if "search_done" not in st.session_state:
     st.session_state.search_done = False
 
@@ -20,7 +22,7 @@ if "search_result" not in st.session_state:
 if "selected_song" not in st.session_state:
     st.session_state.selected_song = "-- Select a song --"
 
-
+# first search option
 if menu == "Search by Song Name":
     st.header("Search Song")
     song_name = st.text_input("Enter Song Name:", key="song_input").strip()
@@ -56,6 +58,7 @@ if menu == "Search by Song Name":
                             target="_blank">Open YouTube</a>""", 
                             unsafe_allow_html=True)
 
+# second search option
 elif menu == "Search by Artist Name":
     st.header("Artist Name")
 
@@ -95,6 +98,8 @@ elif menu == "Search by Artist Name":
                 st.markdown(f"""<a href="{song_row['YouTube Link']}" 
                             target="_blank">Open YouTube</a>""", 
                             unsafe_allow_html=True)
-            
+
+# third search option
 elif menu == "Display All Songs":
+
     st.dataframe(df)
